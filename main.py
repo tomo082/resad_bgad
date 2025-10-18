@@ -277,7 +277,10 @@ if __name__ == "__main__":
     parser.add_argument('--checkpoint_path', type=str, default="./checkpoints/")
     parser.add_argument('--eval_freq', type=int, default=1)
     parser.add_argument('--backbone', type=str, default="wide_resnet50_2")
-    
+#後の２つはbgadのデータを使うために追加
+    parser.add_argument('--class_name', type=str, default='all')
+    parser.add_argument('--data_strategy', default='0,1', type=str,
+                        help='0: Repeated Utilization; 1: RandAugmented CutPaste; 2: RandAugmented CutPaste-Pseudo')   
     # flow parameters
     parser.add_argument('--flow_arch', type=str, default='conditional_flow_model')
     parser.add_argument('--feature_levels', default=3, type=int)
