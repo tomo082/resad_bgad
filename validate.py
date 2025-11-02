@@ -40,6 +40,10 @@ def validate(args, encoder, vq_ops, constraintor, estimators, test_loader, ref_f
                 features = encoder(image)
                 mfeatures = get_matched_ref_features(features, ref_features)
                 rfeatures = get_residual_features(features, mfeatures, pos_flag=True)
+            elif args.backbone == 'tf_efficientnet_b6':#10/26追加
+                features = encoder(image)
+                mfeatures = get_matched_ref_features(features, ref_features)
+                rfeatures = get_residual_features(features, mfeatures, pos_flag=True)
             else:
                 features = encoder.encode_image_from_tensors(image)
                 for i in range(len(features)):
@@ -47,6 +51,7 @@ def validate(args, encoder, vq_ops, constraintor, estimators, test_loader, ref_f
                     features[i] = features[i].permute(0, 2, 1).reshape(b, c, 16, 16)
                 mfeatures = get_matched_ref_features(features, ref_features)
                 rfeatures = get_residual_features(features, mfeatures)
+
             
             fdm_features = vq_ops(rfeatures, train=False)
             rfeatures = applying_EFDM(rfeatures, fdm_features, alpha=args.fdm_alpha)
