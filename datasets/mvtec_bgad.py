@@ -327,7 +327,7 @@ class MVTecFSCopyPasteDataset(Dataset):
                 img = self.normalize(self.transform_img(img))
                 mask = self.transform_mask(mask)
 
-                return img, label, mask
+                return img, label, mask, original_normal_path #11/13追加
         else:  # normal samples
             img, label, mask = self.n_imgs[idx], self.n_labels[idx], self.n_masks[idx]
         img = Image.open(img)
