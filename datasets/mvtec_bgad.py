@@ -478,7 +478,7 @@ class MVTecFSCopyPasteDataset(Dataset):
                         # copy the augmentated anomaly area to the normal image
                         n_image[aug_mask_shifted_i == 255, :] = aug_image[new_aug_mask_i == 255, :]
                         aug_mask_shifted[aug_mask_shifted_i == 255] = 255
-                    return n_image, aug_mask_shifted,normal_image_path　#11/13 normal_image_path追加
+                    return n_image, aug_mask_shifted,normal_image_path #11/13 normal_image_path追加
         else:  # no fg restriction
             # copy the augmentated anomaly area to the normal image
             n_image[aug_mask == 255, :] = aug_image[aug_mask == 255, :]
