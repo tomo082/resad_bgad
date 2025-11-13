@@ -419,7 +419,7 @@ class MVTecFSCopyPasteDataset(Dataset):
                     heights.append(height)
                 if len(widths) == 0 or len(heights) == 0:  # no contours
                     n_image[aug_mask == 255, :] = aug_image[aug_mask == 255, :]
-                    return n_image, aug_mask, normal_image_path　#11/13追加
+                    return n_image, aug_mask, normal_image_path #11/13追加
 
                 else:
                     max_width, max_height = np.max(widths), np.max(heights)
