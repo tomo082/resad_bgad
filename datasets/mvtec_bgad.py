@@ -482,7 +482,7 @@ class MVTecFSCopyPasteDataset(Dataset):
         else:  # no fg restriction
             # copy the augmentated anomaly area to the normal image
             n_image[aug_mask == 255, :] = aug_image[aug_mask == 255, :]
-            return n_image, aug_mask,normal_image_path　#11/13 normal_image_path追加
+            return n_image, aug_mask,normal_image_path #11/13 normal_image_path追加
 
     def load_dataset_folder(self):
         n_img_paths, n_labels, n_mask_paths = [], [], []  # normal
