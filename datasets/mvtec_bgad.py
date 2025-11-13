@@ -395,7 +395,7 @@ class MVTecFSCopyPasteDataset(Dataset):
                 # when most part of aug_mask is in the fg_mask region 
                 # copy the augmentated anomaly area to the normal image
                 n_image[aug_mask == 255, :] = aug_image[aug_mask == 255, :]
-                return n_image, aug_mask
+                return n_image, aug_mask, normal_image_path#11/13追加
             else:
                 contours, _ = cv2.findContours(aug_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                 center_xs, center_ys = [], []
@@ -419,7 +419,8 @@ class MVTecFSCopyPasteDataset(Dataset):
                     heights.append(height)
                 if len(widths) == 0 or len(heights) == 0:  # no contours
                     n_image[aug_mask == 255, :] = aug_image[aug_mask == 255, :]
-                    return n_image, aug_mask
+                    return n_image, aug_mask, normal_image_path　#11/13追加
+
                 else:
                     max_width, max_height = np.max(widths), np.max(heights)
                     center_mask = np.zeros((img_height, img_width), dtype=np.uint8)
@@ -436,7 +437,7 @@ class MVTecFSCopyPasteDataset(Dataset):
                     
                     if xx_yy_fg.shape[0] == 0:  # no fg
                         n_image[aug_mask == 255, :] = aug_image[aug_mask == 255, :]
-                        return n_image, aug_mask
+                        return n_image, aug_mask, normal_image_path　#11/13追加
 
                     aug_mask_shifted = np.zeros((img_height, img_width), dtype=np.uint8)
                     for i in range(len(contours)):
