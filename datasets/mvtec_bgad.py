@@ -345,7 +345,7 @@ class MVTecFSCopyPasteDataset(Dataset):
             mask = Image.open(mask)
             mask = self.transform_mask(mask)
         
-        return img, label, mask, original_normal_path　#11/13追加
+        return img, label, mask, original_normal_path #11/13追加
     
     def randAugmenter(self):
         aug_ind = np.random.choice(np.arange(len(self.augmentors)), 3, replace=False)
