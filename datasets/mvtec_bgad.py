@@ -315,11 +315,12 @@ class MVTecFSCopyPasteDataset(Dataset):
 
     def __getitem__(self, idx):
         if idx >= len(self.n_imgs):  # anomaly samples
+            original_normal_path = None # 対応元パスを初期化11/13追加
             idx_ = idx - len(self.n_imgs)
             img, label, mask = self.a_imgs[idx_], self.a_labels[idx_], self.a_masks[idx_]
             if idx >= len(self.n_imgs) + self.anomaly_nums * self.reuse_times:
                 # generating anomaly sample by copy-pasting
-                img, mask = self.copy_paste(img, mask)
+                img, mask, original_normal_path = self.copy_paste(img, mask)#11/13追加
                 img, mask = Image.fromarray(img), Image.fromarray(mask)
                 # img.save('aug_imgs/gen_img.jpg')
                 # mask.save('aug_imgs/gen_mask.png')
@@ -343,7 +344,7 @@ class MVTecFSCopyPasteDataset(Dataset):
             mask = Image.open(mask)
             mask = self.transform_mask(mask)
         
-        return img, label, mask
+        return img, label, mask, original_normal_path　#11/13追加
     
     def randAugmenter(self):
         aug_ind = np.random.choice(np.arange(len(self.augmentors)), 3, replace=False)
@@ -355,6 +356,7 @@ class MVTecFSCopyPasteDataset(Dataset):
 
     def copy_paste(self, img, mask):
         n_idx = np.random.randint(len(self.n_imgs))  # get a random normal sample
+        normal_image_path = self.n_imgs[n_idx]#11/13追加
         aug = self.randAugmenter()
 
         image = cv2.imread(img)  # anomaly sample
@@ -474,12 +476,11 @@ class MVTecFSCopyPasteDataset(Dataset):
                         # copy the augmentated anomaly area to the normal image
                         n_image[aug_mask_shifted_i == 255, :] = aug_image[new_aug_mask_i == 255, :]
                         aug_mask_shifted[aug_mask_shifted_i == 255] = 255
-                    return n_image, aug_mask_shifted
+                    return n_image, aug_mask_shifted,normal_image_path　#11/13 normal_image_path追加
         else:  # no fg restriction
             # copy the augmentated anomaly area to the normal image
             n_image[aug_mask == 255, :] = aug_image[aug_mask == 255, :]
-
-            return n_image, aug_mask
+            return n_image, aug_mask,normal_image_path　#11/13 normal_image_path追加
 
     def load_dataset_folder(self):
         n_img_paths, n_labels, n_mask_paths = [], [], []  # normal
