@@ -315,7 +315,7 @@ class MVTecFSCopyPasteDataset(Dataset):
 
     def __getitem__(self, idx):
         if idx >= len(self.n_imgs):  # anomaly samples
-            original_normal_path = None # 対応元パスを初期化11/13追加
+            original_normal_path = "" # 対応元パスを初期化11/13追加
             idx_ = idx - len(self.n_imgs)
             img, label, mask = self.a_imgs[idx_], self.a_labels[idx_], self.a_masks[idx_]
             if idx >= len(self.n_imgs) + self.anomaly_nums * self.reuse_times:
@@ -329,7 +329,7 @@ class MVTecFSCopyPasteDataset(Dataset):
 
                 return img, label, mask, original_normal_path #11/13追加
         else:  # normal samples
-            original_normal_path = None
+            original_normal_path = ""
             img, label, mask = self.n_imgs[idx], self.n_labels[idx], self.n_masks[idx]
         img = Image.open(img)
         if self.class_name in ['zipper', 'screw', 'grid']:  # handle greyscale classes
