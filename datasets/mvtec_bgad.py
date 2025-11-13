@@ -437,7 +437,7 @@ class MVTecFSCopyPasteDataset(Dataset):
                     
                     if xx_yy_fg.shape[0] == 0:  # no fg
                         n_image[aug_mask == 255, :] = aug_image[aug_mask == 255, :]
-                        return n_image, aug_mask, normal_image_path　#11/13追加
+                        return n_image, aug_mask, normal_image_path #11/13追加
 
                     aug_mask_shifted = np.zeros((img_height, img_width), dtype=np.uint8)
                     for i in range(len(contours)):
