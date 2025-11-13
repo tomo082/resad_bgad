@@ -329,6 +329,7 @@ class MVTecFSCopyPasteDataset(Dataset):
 
                 return img, label, mask, original_normal_path #11/13追加
         else:  # normal samples
+            original_normal_path = None
             img, label, mask = self.n_imgs[idx], self.n_labels[idx], self.n_masks[idx]
         img = Image.open(img)
         if self.class_name in ['zipper', 'screw', 'grid']:  # handle greyscale classes
